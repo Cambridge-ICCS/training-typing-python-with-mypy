@@ -2,7 +2,9 @@
 
 <br><br><br><br><br>
 
-# Training material for 'Typing Python with mypy' which gives an introduction to using the
+# Training material for 'Typing Python with mypy'
+
+This gives an introduction to using the
 `mypy` tool in the context of Python for adding in static typing ontop. The slides also
 provide some background on typing and verification.
 
