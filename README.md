@@ -14,7 +14,7 @@ This has been delivered in a number of sessions:
 
 ![GitHub](https://img.shields.io/github/license/Cambridge-ICCS/training-typing-python-with-mypy)
 
-* `tutorial.py` contains example
+* `tutorial.py` contains examples
 * `mypy-worksheet.pdf` contains a set of exercises (whose LaTeX source code is in `src`)
 * `mypy-worksheet-solutions.py` provides the solutions
 * `slides.pdf` provides the slides (whose Keynote source is in `src`).
