@@ -7,7 +7,7 @@
 typing and verification.
 
 This has been delivered in a number of sessions:
-gi
+
 * ICCS training day at the African Institute of Computing for Mathematics, Kigali, Rwanda (October 2023)
 * Intermediate Research Software Development Skills In Python for Earth Sciences, Manchester (March 2024)
 * ICCS Summer School 2024 (July 2024)
