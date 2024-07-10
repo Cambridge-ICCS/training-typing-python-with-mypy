@@ -12,7 +12,7 @@ This has been delivered in a number of sessions:
 * Intermediate Research Software Development Skills In Python for Earth Sciences, Manchester (March 2024)
 * ICCS Summer School 2024 (July 2024)
 
-![GitHub](https://img.shields.io/github/license/Cambridge-ICCS/training-typing-python-with-mypy)[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+![GitHub](https://img.shields.io/github/license/Cambridge-ICCS/training-typing-python-with-mypy)
 
 * `tutorial.py` contains example
 * `mypy-worksheet.pdf` contains a set of exercises (whose LaTeX source code is in `src`)
