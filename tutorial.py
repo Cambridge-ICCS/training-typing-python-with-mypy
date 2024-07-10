@@ -37,9 +37,9 @@ def greet_all(names : Iterable[str]) -> None:
   for name in names:
     greet(name)
 
-greetAll(["Alice", "Baiba", "Cornelius"])
-greetAll({"hi":42,"test":55})
-greetAll(("A", "B", "C", "D"))
+greet_all(["Alice", "Baiba", "Cornelius"])
+greet_all({"hi":42,"test":55})
+greet_all(("A", "B", "C", "D"))
 
 def myDiv(x : float, y : float) -> (float | None):
    if y != 0: return x / y
@@ -47,27 +47,51 @@ def myDiv(x : float, y : float) -> (float | None):
 
 myDict : dict[str, float | str] = {"temp" : 273.0, "units": "Kelvin"}
 
+# Classes are used as at type names
+class Complex:
+    def __init__(self, realpart, imagpart):
+        self.r = realpart
+        self.i = imagpart
+
+h : Complex = Complex(3.0, -4.5)
+
+# Querying the types
 if TYPE_CHECKING:
   reveal_type(len)
 
+# A simple example working with parameteric types
+def first_str(xs : list[str]) -> str:
+  return xs[0]
+
+# If we want to do the same thing but on lists of integers
+# we might think of doing:
+
+def first_int(xs : list[int]) -> int:
+  return xs[0]
+
+# But this leads to code duplication...
+# We could use 'Any' which types anything
 from typing import Any
+def first_any(xs : list[Any]) -> Any:
+  return xs[0]
 
-# def first(xs : list[Any]) -> Any:
-#   return xs[0]
-
-# not much information
+# But this does not provide much information: the following
+# has the same type but does something very different
 def notfirst(xs : list[Any]) -> Any:
   return 422934809234
 
-from typing import Any, TypeVar
+# *Instead* we can use parametric polymorphism
+# creating a _type variable_ that quantifies over all types
+from typing import TypeVar
 
 T = TypeVar("T")
-
-# or in python 3.10 and below:
-# def first(xs : list[type(T)]) -> type(T):
 def first(xs : list[T]) -> T:
   return xs[0]
 
+# or in python 3.10 and below:
+# def first(xs : list[type(T)]) -> type(T):
+
+# Now we can reuse the function at different types as normal:
 example0 = first([1,2,3,4])
 #reveal_type(example0)
 example1 = first(["hi","hola"])
@@ -78,10 +102,12 @@ S = TypeVar('S')
 def memo(f : Callable[[S], T], x : S) -> tuple[S,T]:
   return (x, f(x))
 
-# what about functions that return multiple outputs?
-# It's really just at tuple:
-
-def foo(x : T) -> tuple[T,T]:
+# What about functions that return multiple outputs?
+# It's really just as tuple:
+def copy(x : T) -> tuple[T,T]:
   return x, x
 
-a, b = foo(42)
+a, b = copy(42)
+
+# Escape hatch
+borked = 0 / "hello" # type: ignore
