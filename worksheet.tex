@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\usepackage{minted}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage[margin=2cm,top=0.75cm]{geometry}
+
+\title{Using types to rule out bugs: mypy worksheet}
+\author{Dominic Orchard}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent
+This short worksheet will take you through a few exercises
+to practice using mypy. Here is an example as a reminder
+of the syntax for inserting type specifications:
+
+\begin{minted}{python}
+def myAbs(x : float) -> float:
+  """Take the absolute of the floating-point input"""
+  if x < 0:
+    return (-x)
+  else:
+    return x
+\end{minted}
+%
+You can find the standard documentation for Python's
+\texttt{typing} library at:
+
+\begin{center}
+  \url{https://docs.python.org/3/library/typing.html}
+\end{center}
+
+\begin{enumerate}
+\item Define a function \texttt{mean} to take the mean of two
+  floats, giving its full type specification.
+
+  Check that \texttt{mypy} accepts this (i.e., run \texttt{mypy yourfile.py}).
+
+\item Experiment with modifying your function to something that
+ would produce a runtime type error and check how \texttt{mypy} reports this.
+
+\item Using \texttt{reveal\_type} find out what the type of
+  the \texttt{len} function is according to \texttt{mypy}.
+
+  (You might like to guard this with a conditional checking the
+  \texttt{TYPE\_CHECKING} value so you can leave it in and
+  run your code later).
+\end{enumerate}
+%
+Consider the following Python code to calculate
+the mean of a list:
+%
+\begin{minted}{python}
+def meanN(xs : list[float]) -> float:
+  sum = 0.0
+  for x in xs:
+    sum+=x
+  return (sum / len(xs))
+\end{minted}
+%
+There is nothing specific in this code to lists;
+it can be generalised to arbitrary iterable data types.
+Note however, that we use \texttt{len} which requires a
+\texttt{Sized} value, and iteration requires \texttt{Iterable}.
+Instead we can use the \texttt{Collection} class from the \texttt{typing} module
+  (which inherits from both \texttt{Iterable} and \texttt{Sized}).
+
+\begin{enumerate}[resume]
+\item Import the \texttt{Collection} class and modify the above to work on arbitrary
+  collections.
+
+\item Define a generalisation of
+  \texttt{meanN} that takes an additional function parameter.
+  Instead of computing the mean directly, this new function
+  \texttt{meanGen} should
+  sum up all the elements of the collection then apply
+  the parameter function to this value to produce the output.
+
+  Give it a type signature with
+  the most general type.
+
+  \textit{Hint: Use the \texttt{Callable} class.
+    You can introduce a parametric type variable
+    via: } \texttt{T = TypeVar('T')}
+
+  Write some code to use this to compute the mean of some test data.
+
+\item (\textbf{Challenge}) We can further generalise \texttt{meanGen} into a
+  function \texttt{reducer} which captures the general pattern
+  of reducing a collection into a single value, taking as inputs:
+  %
+  \begin{itemize}
+  \item A collection of some arbitrary element type \texttt{T};
+  \item A function with two inputs for combining \texttt{T} values with
+    a partially reduced value \texttt{S}, to produce a new reduced value \texttt{S};
+  \item An initial reduced value \texttt{S};
+  \item A final transformation function mapping from the reduced value \texttt{S} to
+    the final result of type \texttt{U}.
+  \end{itemize}
+  %
+  Implement this general reducer and redefine the mean of a collection
+  in terms of it, giving a simple test.
+\end{enumerate}
+%
+Solutions: \url{http://dorchard.github.io/types-tutorial/mypy-worksheet-solutions.py}
+
+\end{document}
