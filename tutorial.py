@@ -93,10 +93,10 @@ def first(xs : list[T]) -> T:
 
 # Now we can reuse the function at different types as normal:
 example0 = first([1,2,3,4])
-#reveal_type(example0)
 example1 = first(["hi","hola"])
 #reveal_type(example1)
 
+# Example of the Callable interface
 from typing import Callable
 S = TypeVar('S')
 def memo(f : Callable[[S], T], x : S) -> tuple[S,T]:
