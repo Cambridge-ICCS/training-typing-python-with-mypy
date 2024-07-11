@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+# Examples from the workshop session, live coding mostly
 
 # Definition with a type signature
 flag : bool = True
@@ -56,6 +56,7 @@ class Complex:
 h : Complex = Complex(3.0, -4.5)
 
 # Querying the types
+from typing import TYPE_CHECKING
 if TYPE_CHECKING:
   reveal_type(len)
 
