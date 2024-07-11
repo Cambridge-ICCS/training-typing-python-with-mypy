@@ -111,4 +111,21 @@ def copy(x : T) -> tuple[T,T]:
 a, b = copy(42)
 
 # Escape hatch
-borked = 0 / "hello" # type: ignore
+# borked = 0 / "hello" # type: ignore
+
+# Keyword args can be given types
+def flibble(x : int  = 0, y : str = "") -> str:
+  return str(x) + y
+
+flibble(y = "hi", x = 42)
+
+# Variable args have to be homogeneously typed
+def many(*args : int) -> int:
+  y = 0
+  for arg in args:
+    y = y + arg
+  return y
+
+many(10)
+many(10,20,40)
+# many(10,"true") # ill-typed
